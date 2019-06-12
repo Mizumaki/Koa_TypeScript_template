@@ -1,0 +1,22 @@
+{
+  "name": "koa_typescript_template",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Mizumaki/Koa_TypeScript_template.git",
+  "author": "Ryota Mizumaki",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-router": "^7.0.40",
+    "nodemon": "^1.19.1",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.5.1"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "verbose": true,
+  "exec": "ts-node ./src/index.ts",
+  "watch": ["./src"],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "ts json",
+  "quiet": true,
+  "events": {
+    "restart": "echo 'restarted 😎!!'"
+  }
+}
