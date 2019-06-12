@@ -1,0 +1,3 @@
+# /node_modules/* はデフォルトで ignore されるが、明示しておく
+**/node_modules/**
+dist/**
