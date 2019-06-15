@@ -1,5 +1,8 @@
 import Koa from 'koa';
-import router from './router';
+import path from 'path';
+import serve from 'koa-static';
+import handleAPI from './handleAPI';
+import handleError from './handleError';
 import http2 from 'http2';
 import fs from 'fs';
 
@@ -11,34 +14,21 @@ import fs from 'fs';
 const app = new Koa();
 
 // error handling
+app.use(handleError);
 app.use(async (ctx, next) => {
-  try {
-    await next();
-    if (ctx.status === 404) {
-      ctx.app.emit('error', ctx, { status: 404, message: 'You f**ked up' });
-    }
-  } catch (err) {
-    console.log('error', err);
-    ctx.status = err.status || 500;
-    ctx.body = err.message;
-    ctx.app.emit('error', ctx, err);
-  }
+  await next();
+  console.log(`${ctx.method} ${ctx.url}`);
 });
 
+app.use(serve(path.resolve(__dirname, '../public')));
+app.use(handleAPI);
+
 app.on('error', (ctx, err) => {
-  console.log(`🚨  Error 🚨 : ${err.status}`);
+  console.log(`🚨  Error: ${err.status}`);
   console.log(`Message: ${err.message}`);
 });
 
-// logger
-app.use(async (ctx, next) => {
-  await next();
-  const rt = ctx.response.get('X-Response-Time');
-  console.log(`${ctx.method} ${ctx.url} - ${rt}`);
-});
-
-app.use(router.routes());
-
 // const server = http2.createSecureServer(httpsOptions, app.callback());
 // server.listen(3000);
+console.log('\n\nserver listening on http://localhost:8080\n\n');
 app.listen(8080);
